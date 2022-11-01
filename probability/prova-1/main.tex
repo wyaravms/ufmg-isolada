@@ -1,0 +1,335 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\renewcommand{\baselinestretch}{1.2}
+%\setlength{\tabcolsep}{0.5em}
+\renewcommand{\arraystretch}{1.2}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{dsfont} %change indicator function
+\graphicspath{ {images/} }
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+{\Large\textbf{Prova 1} \hfill \\
+Probabilidade \hfill Primeiro Semestre\\
+Wyara Vanesa Moura e Silva \hfill 2022\\}
+
+\section*{Questão 1} Seja $\mathbf{X}$ uma variável aleatória com função de probabilidade de parâmetros $\theta > 0$ dada por 
+\begin{equation*}
+\begin{array}{lclll}
+\mathds{P}(\mathbf{X} = k) & = & \dfrac{e^{-\theta}\theta^{k}}{4k!}(1 + \alpha k), \; & \; k=0,1,2,\ldots
+\end{array}
+\end{equation*}
+\noindent
+Se $\alpha$ é constante positiva.
+
+1. Calcular o valor de $\alpha$.
+
+\noindent
+\textit{Solução:} 
+\begin{equation*}
+\begin{array}{rclll}
+\displaystyle\sum_{k=0}^{\infty}\mathds{P}(\mathbf{X} = k) & = & 1 \\[15pt]
+
+\displaystyle\sum_{k=0}^{\infty}\dfrac{e^{-\theta}\theta^{k}}{4k!} + \displaystyle\sum_{k=0}^{\infty}\alpha k \cdot \dfrac{e^{-\theta}\theta^{k}}{4k!} & = & 1 \\[10pt]
+
+\dfrac{1}{4}\displaystyle\sum_{k=0}^{\infty}\dfrac{e^{-\theta}\theta^{k}}{k!} + \dfrac{\alpha}{4}\displaystyle\sum_{k=0}^{\infty} k \cdot \dfrac{e^{-\theta}\theta^{k}}{k!} & = & 1 \\[10pt]
+
+\alpha \cdot \displaystyle\sum_{k=1}^{\infty}\cdot \dfrac{e^{-\theta}\theta^{k}}{(k-1)!} & = & 3 \\[10pt]
+
+\alpha \cdot e^{-\theta} \cdot \theta \cdot \displaystyle\sum_{k=1}^{\infty}\cdot \dfrac{\theta^{k-1}}{(k-1)!} & = & 3 \\[10pt]
+
+\alpha \cdot e^{-\theta} \cdot \theta \cdot \left\{ 1 + \dfrac{\theta}{1!} + \dfrac{\theta^{2}}{2!} + \dfrac{\theta^{3}}{2!} + \ldots\right\} & = & 3 \\[10pt]
+
+\alpha \cdot e^{-\theta} \cdot \theta \cdot e^{\theta} & = & 3 \\
+\alpha & = & \dfrac{3}{\theta} \\
+\end{array}
+\end{equation*}
+
+2. Provar que podemos escrever
+\begin{equation*}
+\begin{array}{lclll}
+\mathds{P}(\mathbf{X} = k) & = & \dfrac{1}{4}\mathds{P}(\mathbf{Y} = k) + \dfrac{3}{4}\mathds{P}(\mathbf{T} = k).
+\end{array}
+\end{equation*}
+
+onde $\mathbf{Y}$ e $\mathbf{Z}$ tem distribuição de Poisson de parâmetros $\theta$ e ademais $\mathbf{T} = 1 +\mathbf{Z}$.
+
+Pode usar que se $\mathbf{W}$ é Poisson de parâmetro $\theta$, então
+
+\begin{equation*}
+\begin{array}{lclll}
+\mathds{P}(\mathbf{W} = k) & = & \dfrac{e^{-\theta}\theta^{k}}{k!}, \; & \; k=0,1,2,\ldots
+\end{array}
+\end{equation*}
+
+\noindent
+\textit{Solução:} \\
+\begin{equation*}
+\begin{array}{lclll}
+\mathds{P}(\mathbf{X} = k) & = & \dfrac{1}{4}\cdot\dfrac{e^{-\theta}\theta^{k}}{k!} + \dfrac{3}{4}\cdot\dfrac{k}{\theta}\cdot\dfrac{e^{-\theta}\theta^{k}}{k!} \\[10pt]
+
+& = & \dfrac{1}{4}\cdot\dfrac{e^{-\theta}\theta^{k}}{k!} + \dfrac{3}{4}\cdot\dfrac{e^{-\theta}\theta^{k-1}}{(k-1)!} \\
+
+\end{array}
+\end{equation*}
+
+$\mathbf{Z} \sim$ Poisson $(\theta)$.
+
+\begin{equation*}
+\begin{array}{lclll}
+\mathds{P}(\mathbf{Z} = k) & = & \dfrac{e^{-\theta}\theta^{k}}{k!} \\[20pt]
+
+\mathds{P}(\mathbf{T} = k) & = & \mathds{P}(\mathbf{Z} + 1 = k) \; = \; \mathds{P}(\mathbf{Z} = k - 1) \; = \; \dfrac{e^{-\theta}\theta^{k-1}}{(k-1)!} \\[20pt]
+
+\mathds{P}(\mathbf{X} = k) & = & \dfrac{1}{4}\cdot\mathds{P}(\mathbf{Y} = k) \; = \; \dfrac{3}{4}\cdot\mathds{P}(\mathbf{T} = k) \\
+
+\end{array}
+\end{equation*}
+
+\noindent
+mistura de poisson simples será uma poisson deslocada.
+
+\section*{Questão 2} 
+
+Seja $\mathbf{X}$ uma variável aleatória geométrica com parâmetro $p$.
+
+\begin{equation*}
+\begin{array}{lclll}
+\mathds{P}(\mathbf{X} = k) & = & p(1-p)^{k-1}, & 0<p<1, & k=1,2,\ldots
+\end{array}
+\end{equation*}
+
+\noindent
+Encontrar
+
+1. Uma fórmula para $\mathds{P}(\mathbf{X} = k|\mathbf{X}>a)$, com $k \in \mathds{N}$, $a\in \mathds{R}$ e $a>0$.
+
+\noindent
+\textit{Solução:} \\
+\begin{equation*}
+\begin{array}{rclll}
+\displaystyle\sum_{k=0}^{\infty}\mathds{P}(\mathbf{X} = k) & = & \displaystyle\sum_{k=0}^{\infty}p(1-p)^{k-1} & = & 1 \\[15pt]
+
+\displaystyle\sum_{k=0}^{\infty}(1-p)^{k-1} & = & \dfrac{1}{p} \\[15pt]
+
+1 + (1-p) + (1-p)^{2} + (1-p)^{3} + \ldots & = & \dfrac{1}{p} \\[15pt]
+
+\dfrac{1}{1-(1-p)} & = & \dfrac{1}{p} \\[15pt]
+
+\end{array}
+\end{equation*}
+
+\begin{equation*}
+\begin{array}{rclll}
+\mathds{P}(\mathbf{X} = k|\mathbf{X}>a) & = & \dfrac{\mathds{P}(\mathbf{X} = k;\mathbf{X}>a)}{\mathds{P}(\mathbf{X}>a)} & = & \left\{
+    \begin{array}{rrlc}
+         0, & \mbox{se} & k < a \\
+         \dfrac{\mathds{P}(\mathbf{X} = k)}{\mathds{P}(\mathbf{X}>a)}, & \mbox{se} & k>a
+    \end{array}
+\right.\\[15pt]
+
+\end{array}
+\end{equation*}
+
+\noindent
+assim,
+
+\begin{equation*}
+\begin{array}{rclll}
+\mathds{P}(\mathbf{X} > a) & = & \displaystyle\sum_{k=\lfloor a \rfloor + 1}\mathds{P}(\mathbf{X} = k)  \\[15pt]
+
+& = & \displaystyle\sum_{k=\lfloor a \rfloor + 1}p(1-p)^{k-1}  \\[15pt]
+
+& = & p \left\{ \left[(1-p)^{\lfloor a \rfloor} + (1-p)^{\lfloor a \rfloor + 1} + (1-p)^{\lfloor a \rfloor + 2} + \ldots \right] \right\}  \\[15pt]
+
+\end{array}
+\end{equation*}
+
+\begin{equation*}
+\begin{array}{rclll}
+
+& = & p (1-p)^{\lfloor a \rfloor} \left[(1-p)^{\lfloor a \rfloor} + (1-p) + (1-p)^{2} + \ldots \right] \\[15pt]
+
+& = & p (1-p)^{\lfloor a \rfloor} \cdot \dfrac{1}{p} \\[15pt]
+
+& = & (1-p)^{\lfloor a \rfloor} \\[15pt]
+\end{array}
+\end{equation*}
+
+\noindent
+portanto,
+
+\begin{equation*}
+\begin{array}{rclll}
+\mathds{P}(\mathbf{X} = k|\mathbf{X}>a) & = & \left\{
+    \begin{array}{rrlc}
+         0, & \mbox{se} & k < a \\[10pt]
+         \dfrac{p(1-p)^{k-1}}{(1-p)^{\lfloor a \rfloor}}, & \mbox{se} & k>a
+    \end{array}
+\right.\\[25pt]
+
+\end{array}
+\end{equation*}
+
+2. O valor de $\mathds{P}(\mathbf{X} = 10|\mathbf{X}>2\pi)$, para $p=1/2$.
+
+\noindent
+\textit{Solução:} \\
+
+$p=1$, $a=2\pi$ e $k=10$
+
+\begin{equation*}
+\begin{array}{rclllll}
+\mathds{P}(\mathbf{X} = 10|\mathbf{X}>2\pi) & = & \left(  \dfrac{1}{2}\right)\cdot\left(  \dfrac{1}{2}\right)^{10-1-6} & = & \left(  \dfrac{1}{2}\right)^{4} & = & \dfrac{1}{16}
+
+\end{array}
+\end{equation*}
+
+
+\section*{Questão 3} 
+
+Seja $\mathbf{X}$ variável aleatória exponencial de parâmetro $\theta > 0$ e $m$ uma constante positiva, então
+
+\begin{equation*}
+\begin{array}{lclll}
+f_{X}(x) & = & \theta e^{-\theta x}, & x \geq 0.
+\end{array}
+\end{equation*}
+
+\noindent
+Definimos
+\begin{equation*}
+\begin{array}{lclll}
+\mathbf{Z} := \mbox{min}\{\mathbf{X},m\} & = & \mathbf{X} \mathds{1}(\mathbf{X}\leq m) + m \mathds{1}(\mathbf{X} > m), & m>0
+\end{array}
+\end{equation*}
+
+\noindent
+Onde $\mathds{1}(.)$ é a função indicadora.
+
+1. Encontrar a função de distribuição de $\mathbf{Z}$, é uma mistura?
+
+\noindent
+\textit{Solução:} \\
+\begin{equation*}
+\begin{array}{lcllllll}
+\mathbf{Z} & = & \left\{
+    \begin{array}{rrlc}
+         \mathbf{X}, & \mbox{se} & \mathbf{X} \leq m \\
+         m, & \mbox{se} & \mathbf{X} > m
+    \end{array}
+\right. \\[15pt]
+\end{array}
+\end{equation*}
+
+\begin{equation*}
+\begin{array}{rclll}
+\mathds{P}(\mathbf{Z} = m) & = & \mathds{P}(\mathbf{X} > m) & = & e^{-\theta m}\\[15pt]
+
+F_{\mathbf{Z}}(z) & = & \mathds{P}(\mbox{min}\{ \mathbf{X}; m\} \leq z ) \\[15pt]
+
+& = & 1 - \mathds{P}(\mbox{min}\{ \mathbf{X}; m\} > z ) & = & 1 - [\mathds{P}(\mathbf{X} > z, m>z)] \\[15pt]
+
+\end{array}
+\end{equation*}
+
+$\mathds{P}(\mathbf{Y}=m) = 1$: variável degenerada (constante), $\mathbf{X}$ e $\mathbf{Y}$ são independentes.
+
+\begin{equation*}
+\begin{array}{rclll}
+& = & 1 - [\mathds{P}(\mathbf{X} > z, \mathbf{Y}>z)] & = & 1 - [\mathds{P}(\mathbf{X} > z)\cdot\mathds{P}(\mathbf{Y}>z)] \\[15pt]
+
+F_{\mathbf{Z}}(z) & = & 1 - [\mathds{P}(\mathbf{X} > z)\cdot\mathds{P}(\mathbf{Y}>z)] \\[15pt]
+
+\end{array}
+\end{equation*}
+ 
+\begin{equation*}
+\begin{array}{lcllllll}
+\mathds{P}(\mathbf{Y} > z) & = & \mathds{P}(m > z) & = & \left\{
+    \begin{array}{rrlc}
+         1 & \mbox{se} & m > z \\
+         0 & \mbox{se} & m \leq z
+    \end{array}
+\right. \\[15pt]
+\end{array}
+\end{equation*}
+
+Assim,
+\begin{equation*}
+\begin{array}{rclll}
+F_{\mathbf{Z}}(z) & = & 1 - e^{-\theta z}\cdot\mathds{1}(z < m)  \\[15pt]
+
+\end{array}
+\end{equation*}
+\noindent
+sim, é uma mistura.\\
+ 
+2. Se for uma mistura, indicar as componentes da mistura. Fazer um desenho da função de distribuição de $\mathbf{Z}$.
+
+\noindent
+\textit{Solução:} \\
+
+
+\section*{Questão 4}
+
+Dada a variável aleatória $\mathbf{X}$ e a constante $a>0$, com densidade 
+
+\begin{equation*}
+\begin{array}{lcllllll}
+f_{\mathbf{X}}(x) & = & \left\{
+    \begin{array}{rrlc}
+         a/2, & \mbox{se} & -1 < x \leq 0\\
+         \frac{a}{2}e^{-x}, & \mbox{se} & x>0
+    \end{array}
+\right. \\
+\end{array}
+\end{equation*}
+
+1. Encontrar o valor da constante $a$.
+
+\noindent
+\textit{Solução:} 
+
+\begin{equation*}
+\begin{array}{rclll}
+\dfrac{a}{2} + \displaystyle\int_{0}^{\infty}\dfrac{a}{2}e^{-x}dx = 1 \\[15pt]
+\dfrac{a}{2} + \dfrac{a}{2}\displaystyle\int_{0}^{\infty}e^{-x}dx = 1 \\[15pt]
+a = 1 \\[15pt]
+\end{array}
+\end{equation*}
+
+2. Encontrar a função de distribuição e função de densidade da variável aleatória $\mathbf{Y}=\mathbf{X}^{2}$.
+
+\noindent
+\textit{Solução:} \\
+\begin{equation*}
+\begin{array}{rclll}
+F_{\mathbf{Y}}(y) = F_{\mathbf{X}}(\sqrt{y}) - F_{\mathbf{X}}(-\sqrt{y}); & & y > 0. \\[15pt]
+\end{array}
+\end{equation*}
+
+\begin{equation*}
+\begin{array}{rclll}
+f_{\mathbf{Y}}(y) = \dfrac{1}{2\sqrt{y}} \left[ f_{\mathbf{Y}}(\sqrt{y}) + f_{\mathbf{Y}}(-\sqrt{y})\right]; & & y > 0. \\[15pt]
+\end{array}
+\end{equation*}
+
+\begin{equation*}
+\begin{array}{rclll}
+0 < y < 1; & & f_{\mathbf{Y}}(y) & = & \dfrac{1}{2\sqrt{y}}\cdot \left[ \dfrac{1}{2} e^{-\sqrt{y}} + \dfrac{1}{2} \right] \\[15pt]
+
+y \geq 1; & & f_{\mathbf{Y}}(y) & = & \dfrac{1}{2\sqrt{y}}\cdot \dfrac{1}{2} e^{-\sqrt{y}} + 0 \\[15pt]
+\end{array}
+\end{equation*}
+
+\end{document}
