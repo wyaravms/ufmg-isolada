@@ -1,0 +1,176 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\renewcommand{\baselinestretch}{1}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{dsfont} %change indicator function
+\graphicspath{ {images/} }
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+{\Large\textbf{Trabalho 1} \hfill \\
+Inferência \hfill Prof. Vinícius D. Mayrink \\
+Wyara Vanesa Moura e Silva \hfill 25 de Outubro de 2022\\}
+
+\section*{Questão}
+
+Saiba que se $X_{i} \sim \mbox{Weibull}(\alpha, \beta)$ então
+
+\begin{equation*}
+f(x_{i}|\alpha, \beta) = \dfrac{\alpha}{\beta}\left(\dfrac{x_{i}}{\beta}\right)^{\alpha -1}\exp\left\{-\left(\dfrac{x_{i}}{\beta}\right)^{\alpha}\right\}, \hspace{0.5cm} \mbox{para} \hspace{0.5cm} x_{i}\geq 0.
+\end{equation*}
+
+Nesta distribuição contínua temos que $\alpha>0$ é o parâmetro de forma e $\beta>0$ é o parâmetro de escala.
+
+Suponha que $X_{1}, \cdots, X_{n}$ seja uma amostra aleatória proveniente da distribuição Weibull$(\alpha,1)$. Implemente o método de Newton, usando o $software$ $R$, para obter a estimativa de máxima verossimilhança de $\alpha$. Utilize o conjunto de dados fornecido na página do curso.
+
+\vspace{2ex}
+\noindent
+\textit{Solução:}\\
+
+O gráfico da Figura \ref{fig1}, refere-se ao histograma dos dados fornecidos.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 0.7\textwidth, height =0.3\textheight]{Rplot06.pdf}
+\caption{Histograma dos dados Weibull. A linha tracejada corresponde a densidade.}
+\label{fig1}
+\end{figure}
+
+A função de verossimilhança, para $\alpha$ proveniente de uma amostra da distribuição Weibull$(\alpha,1)$, é:
+\begin{equation*}
+\begin{array}{lclll}
+f(\textbf{x}|\alpha) & = & \displaystyle\prod_{i=1}^{n} \dfrac{\alpha}{1}\left(\dfrac{x_{i}}{1}\right)^{\alpha -1}\exp\left\{-\left(\dfrac{x_{i}}{1}\right)^{\alpha}\right\} \\
+& = & \alpha^{n}\left[\displaystyle\prod_{i=1}^{n}\left(x_{i}\right)^{\alpha -1}\right]\exp\left\{-\displaystyle\sum_{i=1}^{n}\left(x_{i}\right)^{\alpha}\right\}  \\[10pt] 
+\end{array}
+\end{equation*}
+
+E assim, a log-verossimilhança, função que queremos otimizar, é dada por:
+
+\begin{equation*}
+\begin{array}{lclll}
+\ln f(\textbf{x}|\alpha) & = & n \ln\alpha + (\alpha -1)\displaystyle\sum_{i=1}^{n}\left(\ln x_{i}\right) -\displaystyle\sum_{i=1}^{n}\left(x_{i}\right)^{\alpha}  \\[10pt] 
+\end{array}
+\end{equation*}
+
+A fim de utilizar o método de Newton para encontrar uma estimativa de máxima verossimilhança para $\alpha$, teremos que encontrar a primeira e segunda derivada da função log-verossimilhança. Desta forma, $f(\alpha)$ é a função que queremos encontrar as raizes utilizando o método de newton, e além dela também precisamos de $f'(\alpha)$ para implementar o algoritmo, tais funções são as respectivas derivadas da função log-verossimilhança:
+
+\begin{equation*}
+\begin{array}{lclclll}
+f(\alpha) & = & \dfrac{\partial}{\partial\alpha}\ln f(\textbf{x}|\alpha) & = & \dfrac{n}{\alpha} + \displaystyle\sum_{i=1}^{n}\left(\ln x_{i}\right) -\displaystyle\sum_{i=1}^{n}(\ln x_{i})\left(x_{i}\right)^{\alpha}  \\[14pt] 
+f'(\alpha) & = & \dfrac{\partial^2}{\partial\alpha^2}\ln
+f(\textbf{x}|\alpha) & = & -\dfrac{n}{\alpha^2} -\displaystyle\sum_{i=1}^{n}(\ln x_{i})^{2}\left(x_{i}\right)^{\alpha}  \\[10pt] 
+\end{array}
+\end{equation*}
+
+%Assim, $f(\alpha)$ é a função que queremos encontrar as raizes utilizando o método de newton, e além dela também precisamos de $f'(\alpha)$ para implementar o algoritmo, tais funções são as respectivas derivadas encontradas anteriormente:
+
+%\begin{equation*}
+%\begin{array}{lclll}
+%f(\alpha) & = & \dfrac{n}{\alpha} + \displaystyle\sum_{i=1}^{n}\left(\ln x_{i}\right) -\displaystyle\sum_{i=1}^{n}\ln(x_{i})\left(x_{i}\right)^{\alpha}  \\[14pt] 
+%f'(\alpha) & = & -\dfrac{n}{\alpha^2} -\displaystyle\sum_{i=1}^{n}\ln(x_{i})^{2}\left(x_{i}\right)^{\alpha}  \\[10pt] 
+%\end{array}
+%\end{equation*}
+
+Para implementação do algoritmo no $R$ foi utilizado a fórmula de recorrência do método de newton:
+\begin{equation*}
+\begin{array}{lclll}
+\alpha_{k+1} & = & \alpha_{k} - \dfrac{f(\alpha_{k})}{f'(\alpha_{k})}, \hspace{2ex} k=0,1,2,\cdots \\[10pt] 
+\end{array}
+\end{equation*}
+
+Além disso, foi escolhido uma precisão de $10^{-7}$, ou seja, o critério de parada do programa será quando o valor absoluto da diferença entre o valor anterior e o atual forem menores que esta precisão. Outra característica importante do programa é a necessidade da entrada de um chute inicial para o parâmetro (ou seja, é necessário que esteja dentro do espaço paramétrico) que se deseja realizar a estimação, neste caso $\alpha$. 
+
+Os códigos em $R$ estão na parte final deste trabalho, a partir daqui serão mostrados alguns resultados utilizando esses algoritmos. 
+
+Para os dados fornecidos, o $\hat{\alpha}$ estimado que irá maximizar a função de verossimilhança será: $\hat{\alpha}$ $=$ $4.965997$. O chute inicial utilizado foi $\hat{\alpha}_{0}$ $=$ $10$.
+
+A Tabela \ref{tab1} mostra alguns resultados de estimações do parãmetro $\alpha$  utilizando o algoritmo desenvolvido, foram geradas amostras com diferentes tamanhos de $n$, e com $\alpha = 5$. O chute inicial utilizado nestas simulações foram todos iguais, $\hat{\alpha}_{0}$ $=$ $2$.
+
+\begin{table}[H]
+\caption{Simulação para diferentes tamanhos de amostras.}\label{tab1}
+\centering
+\begin{tabular}{llllllcc}
+\hline
+n & 10 & 30 & 100 & 1000  \\
+\hline
+$\alpha$ & 5.595741 & 4.692904 & 5.088293 & 5.0562 \\
+\hline
+\end{tabular}
+\end{table}
+
+Podemos observar que quanto maior a amostra, o algoritmo tem um melhor desempenho quanto a estimação do verdadeiro valor para o parâmetro $\alpha$. Não foram obtidos problemas na estimação do parâmetro, quando foram introduzidos diferentes valores nos chutes iniciais de $\alpha$.
+
+\newpage
+\subsection*{Código R}
+
+Veja abaixo os códigos em R utilizados.
+
+\begin{verbatim}
+rm(list=ls(all=TRUE))
+set.seed(22)
+setwd("C:\\Users\\Wyara Silva\\Meu Drive\\disciplina-isolada-ufmg-2022\\
+inferencia-estatistica\\trabalho-1")
+
+dados.f = read.table("Dados_Weibull.txt")
+dados = unlist(dados.f, use.names = FALSE)
+
+library(ggplot2)
+
+ggplot(dados.f, aes(x=V1)) + 
+  geom_histogram(aes(y=..density..), bins = 30, color="black", fill="grey")+
+  geom_density(alpha=.2, linetype = 2, fill="light blue") +
+  labs(x="dados", y = "densidade")
+
+newton.raphson.w = function(x.dados, alpha.0=10, precisao = 1e-7, n=100){
+  
+  #primeira e segunda derivada da log-verossimilhança com relação a alpha
+  dlogLikW = function(y){(length(x.dados)/y) + sum(log(x.dados)) -
+  sum(log(x.dados)*(x.dados^y))}
+  ddlogLikW = function(z){-(length(x.dados)/z^2) -
+  sum((log(x.dados)^2)*(x.dados^z))}
+  
+  for (i in 1:n) {
+    #equação de recorrência de newton-raphson
+    alpha.1 = alpha.0 - dlogLikW(alpha.0)/ddlogLikW(alpha.0)
+    
+    #verificar se convergiu
+    if(abs(alpha.1 - alpha.0) < precisao){
+      res = list(alpha.1,i)
+      names(res) = c("alpha.estimado","n.iter")
+      return(res)
+    }
+    
+    #nova iteração
+    alpha.0 = alpha.1
+  }
+  print("com o número de iterações não houve convergência")
+}
+
+newton.raphson.w(dados)
+
+#simulação
+n = c(10,30,100,1000)
+
+estimativas = array(NA, dim=c(1, length(n)))
+
+for (i in 1:length(n)){
+  #a parametrização da distribuição weibull na função 'rweibull'
+  #é igual a utilizada neste trabalho.
+  dat =  rweibull(n[i], shape=5, scale=1)
+  estimativas[,i] = newton.raphson.w(dat,2)$alpha.estimado
+}
+
+estimativas
+
+\end{verbatim}
+
+\end{document}
