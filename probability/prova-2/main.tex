@@ -1,0 +1,168 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\renewcommand{\baselinestretch}{1.2}
+%\setlength{\tabcolsep}{0.5em}
+\renewcommand{\arraystretch}{1.2}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{dsfont} %change indicator function
+\graphicspath{ {images/} }
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+{\Large\textbf{Prova 2 - Versão 2} \hfill \\
+Probabilidade \hfill Primeiro Semestre\\
+Wyara Vanesa Moura e Silva \hfill 2022\\}
+
+\section*{Questão 1} Seja $\mathbf{X} \sim \mbox{Exp}(\theta)$; $\theta >0$. Definimos $\mathbf{T} = \lfloor \mathbf{X} \rfloor$; onde $a\in \mathds{R}$, $\lfloor \mathbf{a} \rfloor = k$ $\Leftrightarrow$ $k\leq\mathbf{a}<k+1$. Calcular  
+\begin{equation*}
+\begin{array}{lclll}
+\mathds{P}(\mathbf{T} = k) ; &  & \mathds{E}(\mathbf{T})
+\end{array}
+\end{equation*}
+
+\noindent
+\textit{Solução:} \\
+\begin{equation*}
+\begin{array}{lclll}
+\mathds{P}(\mathbf{T} = k) & = & \mathds{P}(\lfloor \mathbf{X} \rfloor = k) & = & \mathds{P}(k\leq\mathbf{X}<k+1) \\
+
+& = &  \displaystyle\int_{k}^{k+1} \theta \cdot e^{-\theta x} dx & = & \left. \theta \left( -\dfrac{1}{\theta} \cdot e^{-\theta x} \right\vert_{k}^{k+1} \right) \\
+
+& = & - e^{-\theta (k+1)} + e^{-\theta k} & = & e^{-\theta k}( 1- e^{-\theta} )\\
+
+\end{array}
+\end{equation*}
+\noindent
+em que tal função corresponde a função de probabilidade da distribuição geométrica $(1-e^{-\theta})$.
+
+\begin{equation*}
+\begin{array}{lclll}
+\mathds{E}(\mathbf{T}) & = & \displaystyle\sum_{k=0}^{\infty} t \cdot e^{-\theta t}(1-e^{-\theta}) & = & (1-e^{-\theta}) \cdot \displaystyle\sum_{k=0}^{\infty} t \cdot e^{-\theta t} \\[10pt] 
+
+& = & (1-e^{-\theta}) \cdot \left[ \dfrac{d}{d\theta} \left(-\displaystyle\sum_{k=0}^{\infty} e^{-\theta t} \right)\right] & = & (1-e^{-\theta}) \dfrac{e^{-\theta}}{(1-e^{-\theta})^{2}} \\[10pt] 
+
+& = & \dfrac{e^{-\theta}}{(1-e^{-\theta})} 
+
+\end{array}
+\end{equation*}
+
+\section*{Questão 2} Sejam $\mathbf{X}$ e $\mathbf{Y}$ i.i.d. geométricas $(\mathbf{p})$; $0<\mathbf{p}<1$.
+
+\begin{equation*}
+\begin{array}{lclll}
+\mathds{P}(\mathbf{X} = k) = \mathbf{p}(1-\mathbf{p})^{k-1}; & k = 1,2,3,\ldots
+\end{array}
+\end{equation*}
+
+Sejam $\mathbf{Z} = \mathbf{Y} - \mathbf{X}$ e $\mathbf{W} = \mathrm{min}\left\{ \mathbf{X}, \mathbf{Y} \right\}$. Encontrar a probabilidade conjunta $\mathds{P}(\mathbf{W} = j,\mathbf{Z} = k)$.
+
+\noindent
+\textit{Solução:} \\
+\begin{equation*}
+\begin{array}{lclll}
+\mathds{P}(\mathbf{W} = j, \mathbf{Z} = k) & = &  \mathds{P}(\mathrm{min}\left\{ \mathbf{X}, \mathbf{Y} \right\} = j, \mathbf{Y} - \mathbf{X} = k, \mathbf{X} \leq \mathbf{Y}) \; +  \\
+&  & + \; \mathds{P}(\mathrm{min}\left\{ \mathbf{X}, \mathbf{Y} \right\} = j, \mathbf{Y} - \mathbf{X} = k, \mathbf{X} > \mathbf{Y}) \\
+
+& = & \mathds{P}(\mathbf{X} = j, \mathbf{Y} = k + \mathbf{X}, \mathbf{X} \leq \mathbf{Y})) + \mathds{P}(\mathbf{Y} = j, \mathbf{X} = \mathbf{Y} - k, \mathbf{X} > \mathbf{Y}))  \\
+
+& = & \mathds{P}(\mathbf{X} = j, \mathbf{Y} = k + j, j \leq k+j) + \mathds{P}(\mathbf{Y} = j, \mathbf{X} = j - k, j - k > j))  \\
+
+& = & \mathds{P}(\mathbf{X} = j, \mathbf{Y} = k + j, 0 \leq k) + \mathds{P}(\mathbf{Y} = j, \mathbf{X} = j - k, k < 0))  \\
+\end{array}
+\end{equation*}
+
+\begin{equation*}
+\begin{array}{lclll}
+& = & \mathds{P}(\mathbf{X} = j) \cdot \mathds{P}(\mathbf{Y} = k + j)\mathds{1}_{\{0,1,2,\ldots\}}(k) \; + \; \mathds{P}(\mathbf{Y} = j)\cdot \mathds{P}(\mathbf{X} = j - k)\mathds{1}_{\{-1,-2,\ldots\}}(k)  \\
+& = & \mathbf{p}(1-\mathbf{p})^{j-1}\mathbf{p}(1-\mathbf{p})^{k+j-1} \cdot \mathds{1}_{\{0,1,2,\ldots\}}(k) \; + \; \mathbf{p}(1-\mathbf{p})^{j-k-1}\mathbf{p}(1-\mathbf{p})^{j-1} \mathds{1}_{\{-1,-2,\ldots\}}(k)  \\
+
+& = & \mathbf{p}^{2}(1-\mathbf{p})^{k+2j-2}\mathbf{p}(1-\mathbf{p})^{k+j-1} \cdot \mathds{1}_{\{0,1,2,\ldots\}}(k) \; +  \\
+&  & + \; \mathbf{p}^{2}(1-\mathbf{p})^{-k+2j-2}\mathbf{p}(1-\mathbf{p})^{j-1} \mathds{1}_{\{-1,-2,\ldots\}}(k)  \\
+
+& = & \mathbf{p}^{2}(1-\mathbf{p})^{2j-2}\left[(1-\mathbf{p})^{k}\mathds{1}_{\{0,1,2,\ldots\}}(k) + (1-\mathbf{p})^{-k} \mathds{1}_{\{-1,-2,\ldots\}}(k)\right]  \\
+
+\end{array}
+\end{equation*}
+
+
+\section*{Questão 3} 
+
+$\mathbf{X} \sim \mbox{Uniforme}[0,a]$; $a>0$, $\mathbf{Y} \sim \mbox{Exp}(\theta)$; $\theta>0$, independentes. Seja $\mathbf{Z} = \mathbf{X} + \mathbf{Y}$. Calcular a densidade de $\mathbf{X}$.
+
+\noindent
+\textit{Solução:} \\
+\begin{equation*}
+\begin{array}{lclll}
+f_{z}(z) & = & \displaystyle\int_{0}^{\infty} f_{\mathbf{Y}}(y) \cdot f_{\mathbf{X}}(z-y)dy  \\
+\end{array}
+\end{equation*}
+
+Logo, 
+
+\hspace{1cm} se $0<z<a$
+
+\begin{equation*}
+\begin{array}{lclll}
+f_{z}(z) & = & \left.\displaystyle\int_{0}^{z} \dfrac{1}{a} \cdot \theta \cdot e^{-\theta x} dy = \dfrac{1}{a}\left[ \theta \left( -\dfrac{1}{\theta} \cdot e^{-\theta x} \right\vert_{0}^{z}\right) \right] & = & \dfrac{1}{a} \left( 1 - e^{-\theta z} \right) \mathds{1}_{(0,a)}(z) \\
+\end{array}
+\end{equation*}
+
+\hspace{1cm} se $a<z<\infty$
+
+\begin{equation*}
+\begin{array}{lclll}
+f_{z}(z) & = & \left.\displaystyle\int_{z-a}^{z} \dfrac{1}{a} \cdot \theta \cdot e^{-\theta x} dy = \dfrac{1}{a}\left[ \theta \left( -\dfrac{1}{\theta} \cdot e^{-\theta x} \right\vert_{0}^{z}\right) \right] \\[10pt]
+& = & \dfrac{1}{a}\cdot\left( e^{-\theta (z-a)} \right) \\[10pt]
+& = & \dfrac{1}{a}\cdote^{-\theta z}\left( e^{\theta a} - 1\right) \mathds{1}_{(a,\infty)}(z) \\
+\end{array}
+\end{equation*}
+
+\section*{Questão 4}
+
+Dada a densidade conjunta de $\mathbf{X},\mathbf{Y}$. 
+
+\begin{equation*}
+\begin{array}{lclll}
+f_{\mathbf{X},\mathbf{Y}}(x,y) = \dfrac{\sqrt{3}}{4\pi}\mbox{exp}\left[ -\dfrac{1}{2} (x^{2} - xy + y^{2}) \right]; \; & \; x,y \in \mathds{R}
+\end{array}
+\end{equation*}
+
+Calcular $\mathds{E}[\mathbf{X}\mathbf{Y}]$.
+
+\noindent
+\textit{Solução:} \\
+\begin{equation*}
+\begin{array}{lclllll}
+\mathds{E}[\mathbf{X}\mathbf{Y}] & = & \displaystyle\int_{-\infty}^{\infty}\displaystyle\int_{-\infty}^{\infty} xy \cdot f_{\mathbf{XY}}(xy) dxdy \\[10pt] 
+
+& = & \displaystyle\int_{-\infty}^{\infty}\displaystyle\int_{-\infty}^{\infty} xy \cdot \dfrac{\sqrt{3}}{4\pi}\mbox{exp}\left[ -\dfrac{1}{2} (x^{2} - xy + y^{2}) \right] dxdy \\[10pt] 
+
+& = & \displaystyle\int_{-\infty}^{\infty}\displaystyle\int_{-\infty}^{\infty} y \cdot \dfrac{\sqrt{3}}{4\pi} \cdot x \cdot \mbox{exp}\left[ -\dfrac{1}{2} (x^{2} - xy + y^{2}) \right] dxdy \\[10pt] 
+& = & \displaystyle\int_{-\infty}^{\infty}\displaystyle\int_{-\infty}^{\infty} y \cdot \dfrac{\sqrt{3}}{4\pi} \cdot x \cdot \mbox{exp}\left[ -\dfrac{1}{2} (x^{2} - xy + y^{2}) \right] dxdy \\[10pt] 
+
+& = & \displaystyle\int_{-\infty}^{\infty} y \cdot \dfrac{\sqrt{3}}{4\pi} \cdot \displaystyle\int_{-\infty}^{\infty} x \cdot \mbox{exp}\left[ -\dfrac{1}{2} \left(x -  \dfrac{y}{2}\right)^{2} - \dfrac{1}{2} \left(\dfrac{3y^{2}}{4}\right) \right] dxdy \\[10pt] 
+
+& = & \dfrac{\sqrt{3}}{4\pi} \cdot \displaystyle\int_{-\infty}^{\infty} y \cdot \mbox{exp}\left[ - \dfrac{1}{2} \left(\dfrac{3y^{2}}{4}\right) \right] \sqrt{2\pi} \displaystyle\int_{-\infty}^{\infty} x \cdot \dfrac{1}{\sqrt{2\pi}}\mbox{exp}\left[ -\dfrac{1}{2} \left(x -  \dfrac{y}{2}\right)^{2}  \right] dxdy \\[10pt] 
+
+& = & \dfrac{\sqrt{3}\sqrt{2\pi}}{4\pi} \cdot \displaystyle\int_{-\infty}^{\infty} y \cdot \mbox{exp}\left[ - \dfrac{1}{2} \left(\dfrac{3y^{2}}{4}\right) \right] \dfrac{y}{2} dy \\[15pt] 
+
+& = & \dfrac{\sqrt{3}\sqrt{2\pi}}{4\pi} \cdot \displaystyle\int_{-\infty}^{\infty} \dfrac{y^{2}}{2} \cdot \mbox{exp}\left[ - \dfrac{1}{2} \left(\dfrac{y^{2}}{\dfrac{4}{3}}\right) \right]  dy \\[10pt] 
+
+& = & \dfrac{\sqrt{3}\sqrt{2\pi}}{8\pi} \cdot \displaystyle\int_{-\infty}^{\infty} y^{2} \cdot \dfrac{\sqrt{2\pi}\sqrt{\dfrac{4}{3}}}{\sqrt{2\pi}\sqrt{\dfrac{4}{3}}} \cdot \mbox{exp}\left[ - \dfrac{1}{2} \left(\dfrac{y^{2}}{\dfrac{4}{3}}\right) \right]  dy \\[20pt] 
+
+
+& = & \dfrac{\sqrt{3}\sqrt{2\pi}}{8\pi} \cdot \sqrt{2\pi}\cdot\sqrt{\dfrac{4}{3}} \; = \; \dfrac{2}{3} \\[10pt] 
+
+\end{array}
+\end{equation*}
+
+\end{document}

@@ -1,0 +1,473 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\renewcommand{\baselinestretch}{1.2}
+%\setlength{\tabcolsep}{0.5em}
+\renewcommand{\arraystretch}{1.2}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{dsfont} %change indicator function
+\graphicspath{ {images/} }
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+{\Large\textbf{Prova 2} \hfill \\
+Probabilidade \hfill Primeiro Semestre\\
+Wyara Vanesa Moura e Silva \hfill 2022\\}
+
+\section*{Questão 1} Sejam $\boldsymbol{X}$ e $\boldsymbol{Y}$ variáveis aleatórias independentes com função de probabilidade geométrica de parâmetros $\alpha > 0$ e $\beta > 0$ respectivamente.
+
+\begin{equation*}
+\begin{array}{lclll}
+\mathds{P}(\mathbf{X} = k) = \alpha(1-\alpha)^{k-1}, &  & \mathds{P}(\mathbf{Y} = k) = \beta(1-\beta)^{k-1}, &  & k = 1,2,\ldots
+\end{array}
+\end{equation*}
+
+Definimos:
+
+\begin{equation*}
+\begin{array}{lclll}
+\mathbf{U} = \mathrm{min}\left\{ \mathbf{X}, \mathbf{Y} \right\}, &  & \mathbf{V} = \mathrm{max}\left\{ \mathbf{X}, \mathbf{Y} \right\}, &  & \mathbf{W} = \mathbf{V} - \mathbf{U}
+\end{array}
+\end{equation*}
+
+1. Calcular a probabilidade conjunta de ($\mathbf{U}, \mathbf{V}$)
+
+\noindent
+\textit{Solução:} \\
+
+Probabilidade conjunta de ($\mathbf{U}, \mathbf{V}$):
+
+\begin{equation*}
+\begin{array}{lclll}
+\mathds{P}(\mathbf{U} = u, \mathbf{V} = v) & = &  \mathds{P}(\mathrm{min}\left\{ \mathbf{X}, \mathbf{Y} \right\} = u, \mathrm{max}\left\{ \mathbf{X}, \mathbf{Y} \right\} = v, \mathbf{X} \geq \mathbf{Y}) \; +  \\
+&  & + \; \mathds{P}(\mathrm{min}\left\{ \mathbf{X}, \mathbf{Y} \right\} = u, \mathrm{max}\left\{ \mathbf{X}, \mathbf{Y} \right\} = v, \mathbf{X} < \mathbf{Y}) \\
+
+& = & \mathds{P}(\mathbf{Y} = u, \mathbf{X} = v, v \geq u) + \mathds{P}(\mathbf{X} = u, \mathbf{Y} = v, u < v) \\
+
+& = & \mathds{P}(\mathbf{Y} = u) \mathds{P}(\mathbf{X} = v) \mathds{1}( v \geq u) + \mathds{P}(\mathbf{X} = u) \mathds{P}(\mathbf{Y} = v) \mathds{1}(u < v) \\
+& = & \alpha(1-\alpha)^{v-1}\beta(1-\beta)^{u-1}\mathds{1}( v \geq u) + \alpha(1-\alpha)^{u-1}\beta(1-\beta)^{v-1}\mathds{1}(u<v) \\
+
+& = & \alpha\beta \left[ (1-\alpha)^{v-1}(1-\beta)^{u-1}\mathds{1}( v \geq u) + (1-\alpha)^{u-1}(1-\beta)^{v-1}\mathds{1}(u<v) \right]\\
+
+\end{array}
+\end{equation*}
+
+\noindent
+$\bullet$ resultados adicionais:
+
+função de probabilidade do $\mathrm{min}\left\{ \mathbf{X}, \mathbf{Y}\right\} = \mathbf{U}$
+
+\begin{equation*}
+\begin{array}{lclll}
+\mathds{P}(\mathbf{U} = u) & = &  \mathds{P}(\mathrm{min}\left\{ \mathbf{X}, \mathbf{Y} \right\} = k) \\
+& = &  \mathds{P}(\mathrm{min}\left\{ \mathbf{X}, \mathbf{Y} \right\} = k, \mathbf{X} \leq \mathbf{Y})) + \mathds{P}(\mathrm{min}\left\{ \mathbf{X}, \mathbf{Y} \right\} = k, \mathbf{X} > \mathbf{Y})) \\
+
+& = &  \mathds{P}(\mathbf{X} = k, \mathbf{Y} \geq k) + \mathds{P}(\mathbf{X} > k, \mathbf{Y}= k) \\[25pt]
+
+\mathds{P}(\mathbf{X} > k) & = &  \mathds{P}(\mathbf{X} \geq k) - \mathds{P}(\mathbf{X} = k)\\
+& = &  (1-\alpha)^{k-1} - \alpha(1-\alpha)^{k-1} \\
+& = &  (1-\alpha)^{k-1} (1-\alpha) \\[25pt]
+
+\mathds{P}(\mathbf{X} \geq k) & = &  \displaystyle\sum_{k=u}^{\infty}\alpha(1-\alpha)^{k-1} \\
+& = &  \alpha(1-\alpha)^{u-1} \left[ 1 + (1-\alpha)^{1} + (1-\alpha)^{2} + \ldots \right] \\
+& = &  \alpha(1-\alpha)^{u-1} \displaystyle\sum_{i=0}^{\infty}(1-\alpha)^{i} \\
+& = &  \alpha(1-\alpha)^{u-1} \dfrac{1}{1-(1-\alpha)} \; = \; (1-\alpha)^{u-1} \\[25pt]
+
+\end{array}
+\end{equation*}
+
+\begin{equation*}
+\begin{array}{lclll}
+
+\mathds{P}(\mathbf{U} = u) & = &  \mathds{P}(\mathrm{min}\left\{ \mathbf{X}, \mathbf{Y} \right\} = k) \\
+
+& = & \left[ \alpha(1-\alpha)^{k-1}(1-\beta)^{k-1} + (1-\alpha)^{k-1}(1-\alpha)\beta(1-\beta)^{k-1} \right] \\
+
+& = &  \left[ (1-\alpha)(1-\beta) \right]^{k-1}\left[ \alpha + \beta(1-\alpha) \right] \\
+
+& = &  \left[ (1-\alpha)(1-\beta) \right]^{k-1}\left[ \alpha + \beta -\alpha\beta) \right] \\[25pt]
+
+\displaystyle\sum_{k=1}^{\infty}\mathds{P}(\mathbf{U} = k) & = & \displaystyle\sum_{k=1}^{\infty} \left[ (1-\alpha)(1-\beta) \right]^{k-1}\left[ \alpha + \beta(1-\alpha) \right]\\
+
+& = & \left[ \alpha + \beta -\alpha\beta) \right]\cdot \dfrac{1}{1-(1-\alpha)(1-\beta)} \; = \; 1
+ 
+\end{array}
+\end{equation*}
+
+Logo, 
+
+\begin{equation*}
+\begin{array}{lclll}
+
+\mathds{P}(\mathbf{U} = u) & = &  \left[ (1-\alpha)(1-\beta) \right]^{k-1}\left[ \alpha + \beta -\alpha\beta) \right] \\[10pt]
+
+\end{array}
+\end{equation*}
+
+Função de probabilidade do $\mathrm{max}\left\{ \mathbf{X}, \mathbf{Y} \right\} = \mathbf{V}$
+
+\begin{equation*}
+\begin{array}{lclll}
+\mathds{P}(\mathrm{max}\left\{ \mathbf{X}, \mathbf{Y} \right\}) & = &  \mathds{P}(\mathrm{max}\left\{ \mathbf{X}, \mathbf{Y} \right\} = k, \mathbf{X} \leq \mathbf{Y}) \; + \; \mathds{P}(\mathrm{max}\left\{ \mathbf{X}, \mathbf{Y} \right\} = k, \mathbf{X} > \mathbf{Y}) \\
+
+& = & \mathds{P}(\mathbf{X} \leq k, \mathbf{Y} = k) + \mathds{P}(\mathbf{X} = k, \mathbf{Y} < k) \\
+
+& = & \mathds{P}(\mathbf{X} \leq k) \mathds{P}(\mathbf{Y} = k) + \mathds{P}(\mathbf{X} = k)\mathds{P}(\mathbf{Y} < k) \\[25pt]
+
+\mathds{P}(\mathbf{X} \leq k) & = & 1 - \mathds{P}(\mathbf{X} > k) \; = \; 1 - \left[ (1-\alpha)^{k-1}(1-\alpha)\right] \\[25pt]
+
+\mathds{P}(\mathbf{Y} < k) & = & 1 - \mathds{P}(\mathbf{X} \geq k) \; = \; 1 - \left[ (1-\beta)^{k-1}\right] \\[25pt]
+
+\mathds{P}(\mathrm{max}\left\{ \mathbf{X}, \mathbf{Y} \right\}) & = & \left\{ 1 - \left[ (1-\alpha)^{k-1}(1-\alpha)\right]\right\} \beta(1-\beta)^{k-1} \; + \;  \\
+
+& & \; + \; \left\{1 - \left[(1-\beta)^{k-1}\right]\right\}\alpha(1-\alpha)^{k-1}\\
+
+& = & \beta(1-\beta)^{k-1} - \beta\beta(1-\beta)^{k-1}(1-\alpha)^{k-1}(1-\alpha) \; + \\
+& & \; + \; \alpha(1-\alpha)^{k-1} - \alpha(1-\alpha)^{k-1}(1-\beta)^{k-1} \\
+
+& = & (1-\beta)^{k-1}\left[ \beta - \beta(1-\alpha)^{k-1}(1-\alpha) - \alpha(1-\alpha)^{k-1}\right] \; + \; \alpha(1-\alpha)^{k-1} \\
+
+& = & \beta(1-\beta)^{k-1} \; + \; \alpha(1-\alpha)^{k-1} \; - \; \left[(1-\alpha)(1-\beta)\right]^{k-1}\left[\beta(1-\alpha) + \alpha\right] \\[25pt]
+
+\displaystyle\sum_{k=1}^{\infty}\mathds{P}(\mathbf{V} = k) & = & \displaystyle\sum_{k=1}^{\infty} \left\{ \beta(1-\beta)^{k-1} + \alpha(1-\alpha)^{k-1} - \left[\beta(1-\alpha) + \alpha\right] \left[ (1-\alpha)(1-\beta) \right]^{k-1}\right\}\\
+
+& = & \beta\displaystyle\sum_{k=1}^{\infty}(1-\beta)^{k-1} + \alpha\displaystyle\sum_{k=1}^{\infty}(1-\alpha)^{k-1} - \left[\beta(1-\alpha) + \alpha\right] \cdot \\
+
+& & \cdot \displaystyle\sum_{k=1}^{\infty}  \left[(1-\alpha)(1-\beta)\right]^{k-1}\\
+
+& = & \beta \cdot \dfrac{1}{1-(1-\beta)} + \alpha \cdot \dfrac{1}{1-(1-\alpha)} - \left[\beta(1-\alpha) + \alpha\right] \cdot \dfrac{1}{1-(1-\alpha)(1-\beta)} \\
+
+& = & 1 + 1 - 1 \; = \; 1 \\
+
+\end{array}
+\end{equation*}
+
+Logo, 
+
+\begin{equation*}
+\begin{array}{lclll}
+
+\mathds{P}(\mathbf{V} = k) & = & \beta(1-\beta)^{k-1} + \alpha(1-\alpha)^{k-1} -  \left[ (1-\alpha)(1-\beta) \right]^{k-1}\left[\beta (1-\alpha) + \alpha\right] \\[10pt]
+
+\end{array}
+\end{equation*}
+
+2.Provar que $\mathbf{U}$ e $\mathbf{V}$ são independentes
+
+\noindent
+\textit{Solução:}
+
+\begin{equation*}
+\begin{array}{lclll}
+\mathbf{U} = \mathrm{min}\left\{ \mathbf{X}, \mathbf{Y} \right\}, & & \mathbf{W} = \mathrm{max}\left\{ \mathbf{X}, \mathbf{Y} \right\} - \mathbf{U}  \\
+\end{array}
+\end{equation*}
+
+\begin{equation*}
+\begin{array}{lclll}
+\mathds{P}(\mathbf{U} = u, \mathbf{W} = w) & = &  \mathds{P}(\mathrm{min}\left\{ \mathbf{X}, \mathbf{Y} \right\} = u, \mathrm{max}\left\{ \mathbf{X}, \mathbf{Y} \right\} - \mathrm{min}\left\{ \mathbf{X}, \mathbf{Y} \right\} = w) \\
+& = & \mathds{P}(\mathrm{min}\left\{ \mathbf{X}, \mathbf{Y} \right\} = u, \mathrm{max}\left\{ \mathbf{X}, \mathbf{Y} \right\} - \mathrm{min}\left\{ \mathbf{X}, \mathbf{Y} \right\} = w, \mathbf{X} \leq \mathbf{Y})) \\
+&  & \; + \; \mathds{P}(\mathrm{min}\left\{ \mathbf{X}, \mathbf{Y} \right\} = u, \mathrm{max}\left\{ \mathbf{X}, \mathbf{Y} \right\} - \mathrm{min}\left\{ \mathbf{X}, \mathbf{Y} \right\} = w, \mathbf{X} > \mathbf{Y})) \\
+
+& = & \mathds{P}(\mathbf{X} = u, \mathbf{Y} - \mathbf{X} = w, \mathbf{Y} \geq \mathbf{X}) + \mathds{P}(\mathbf{Y} = u, \mathbf{X} - \mathbf{Y} = w, \mathbf{X} > \mathbf{Y}) \\
+
+& = & \mathds{P}(\mathbf{X} = u, \mathbf{Y} = w + u, w + u \geq u) + \mathds{P}(\mathbf{Y} = u, \mathbf{X} = w + u, w + u > u) \\
+
+& = & \mathds{P}(\mathbf{X} = u, \mathbf{Y} = w + u, w \geq 0) + \mathds{P}(\mathbf{Y} = u, \mathbf{X} = w + u, w > 0) \\
+
+& = & \alpha(1-\alpha)^{u-1}\beta(1-\beta)^{w+u-1}\mathds{1}_{\{0,1,2,\ldots\}}(w) \; + \; \\
+&  & \; + \; \alpha(1-\alpha)^{w+u-1}\beta(1-\beta)^{u-1}\mathds{1}_{\{1,2,\ldots\}}(w) \\
+
+& = & \alpha\beta(1-\alpha)^{u-1}\beta(1-\beta)^{u-1} \; \cdot \; \\ 
+&  & \; \cdot \;  \left[(1-\beta)^{w} \mathds{1}_{\{0,1,2,\ldots\}}(w) + (1-\alpha)^{w} \mathds{1}_{\{1,2,\ldots\}}(w) \right] \\[10pt]
+
+\end{array}
+\end{equation*}
+
+Agora, iremos encontrar as marginais,
+
+\begin{equation*}
+\begin{array}{lclll}
+
+\mathds{P}(\mathbf{U} = u) & = & \displaystyle\sum_{w=0}^{\infty} \alpha\beta (1-\alpha)^{u-1} (1-\beta)^{u-1}(1-\beta)^{w} \; + \; \\ 
+&  & \; + \; \displaystyle\sum_{w=1}^{\infty} \alpha\beta (1-\alpha)^{u-1} (1-\beta)^{u-1}(1-\alpha)^{w}\\
+
+& = & \alpha\beta(1-\alpha)^{u-1}(1-\beta)^{u-1} \; \cdot \; \\ 
+&  & \; \cdot \;  \left[\displaystyle\sum_{w=0}^{\infty}(1-\beta)^{w} +  \displaystyle\sum_{w=1}^{\infty} (1-\alpha)^{w} \right] \\
+
+& = & \alpha\beta\left[(1-\alpha)(1-\beta)\right]^{u-1} \; \cdot \; \\ 
+&  & \; \cdot \;  \left[\dfrac{1}{1-(1-\beta)} + \dfrac{(1-\alpha)}{1-(1-\alpha)} \right] \\
+
+& = & \left[(1-\alpha)(1-\beta)\right]^{u-1}(\alpha + \beta - \alpha\beta)  \\[25pt]
+
+\end{array}
+\end{equation*}
+
+\begin{equation*}
+\begin{array}{lclll}
+\mathds{P}(\mathbf{W} = w) & = & \displaystyle\sum_{w=0}^{\infty} \alpha\beta (1-\alpha)^{u-1} (1-\beta)^{u-1}  \; \cdot \; \\ 
+&  & \; \cdot \;  \left[(1-\beta)^{w} \mathds{1}_{\{0,1,2,\ldots\}}(w) + (1-\alpha)^{w} \mathds{1}_{\{1,2,\ldots\}}(w) \right] \\
+
+& = & \alpha\beta \left[(1-\beta)^{w} \mathds{1}_{\{0,1,2,\ldots\}}(w) + (1-\alpha)^{w} \mathds{1}_{\{1,2,\ldots\}}(w) \right] \; \cdot \; \\ 
+&  & \; \cdot \;  \displaystyle\sum_{w=0}^{\infty}\left[(1-\alpha)(1-\beta)\right]^{u-1}  \\
+
+& = & \alpha\beta \left[(1-\beta)^{w} \mathds{1}_{\{0,1,2,\ldots\}}(w) + (1-\alpha)^{w} \mathds{1}_{\{1,2,\ldots\}}(w) \right] \; \cdot \; \\ 
+&  & \; \cdot \;  \dfrac{1}{1-(1-\alpha)(1-\beta)} \\[25pt]
+
+\end{array}
+\end{equation*}
+
+\begin{equation*}
+\begin{array}{lclll}
+& = & \alpha\beta  \dfrac{1}{(\alpha + \beta - \alpha\beta)} \cdot \left[(1-\beta)^{w} \mathds{1}_{\{0,1,2,\ldots\}}(w) + (1-\alpha)^{w} \mathds{1}_{\{1,2,\ldots\}}(w) \right] \\[25pt]
+
+\end{array}
+\end{equation*}
+
+Logo, como $\mathds{P}(\mathbf{U} = u, \mathbf{W} = w) = \mathds{P}(\mathbf{U} = u)\cdot\mathds{P}(\mathbf{W} = w)$ então, $\mathbf{U}$ e $\mathbf{W}$ são independentes, assim está provado.
+
+\section*{Questão 2} Seja o espaço amostral $\Omega = \{a,b,c\}$ e considere a sigma álgebra como o conjunto das partes. Definimos as probabilidades sobre este espaço por
+
+\begin{equation*}
+\begin{array}{lclll}
+\mathds{P}(\mathbf{\{a\}}) = \dfrac{1}{2} & \mathds{P}(\mathbf{\{b\}}) = \dfrac{1}{4} & \mathds{P}(\mathbf{\{c\}}) = \dfrac{1}{4}.
+\end{array}
+\end{equation*}
+
+Sejam as variáveis aleatórias $\mathbf{X}$ e $\mathbf{Y}$ definidas por
+
+\begin{equation*}
+\begin{array}{lclll}
+\mathbf{X}(\mathbf{\omega}) = \mathbf{I}_{\{a\}}(\omega) - \mathbf{I}_{\{b,c\}}(\omega) & \mbox{e} & \mathbf{Y}(\mathbf{\omega}) = \mathbf{I}_{\{b\}}(\omega) - \mathbf{I}_{\{c\}}(\omega).
+\end{array}
+\end{equation*}
+
+Onde o indicador é definido por
+
+\begin{equation*}
+\begin{array}{lcllllll}
+\mathbf{I}_{\{A\}}(\omega) & = & \left\{
+    \begin{array}{rrlc}
+         1 & \mbox{se} & \omega \in A\\
+         0 & \mbox{se} & \mbox{caso contrário}.
+    \end{array}
+\right. \\
+\end{array}
+\end{equation*}
+
+1. Calcular as distribuições de probabilidade de $\mathbf{X}$ e $\mathbf{Y}$.
+
+\noindent
+\textit{Solução:} \\
+\begin{equation*}
+\begin{array}{lcrrrrrrrrrrr}
+\mathbf{X}(\mathbf{\{a\}}) & = & 1, & 
+\mathbf{X}(\mathbf{\{b\}}) & = & -1, & 
+\mathbf{X}(\mathbf{\{c\}}) & = & -1 & 
+\end{array}
+\end{equation*}
+
+\begin{equation*}
+\begin{array}{lclll}
+\mathds{P}(\mathbf{X} = 1) = \dfrac{1}{2}, & & \mathds{P}(\mathbf{X} = -1) = \dfrac{1}{4} + \dfrac{1}{4} = \dfrac{1}{2}.
+\end{array}
+\end{equation*}
+
+assim a distribuição de probabilidade de $\mathbf{X}$ é:
+
+\begin{table}[H]
+\caption{Distribuição de probabilidade de $\mathbf{X}$}\label{inference}
+\centering
+\begin{tabular}{lrrr}
+\hline
+$\mathbf{X}$ & -1 & 1   \\
+\hline
+$\mathds{P}(\mathbf{X} = k)$ & $\frac{1}{2}$ & $\frac{1}{2}$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{equation*}
+\begin{array}{lcrrrrrrrrrrr}
+\mathbf{Y}(\mathbf{\{a\}}) & = & 0, & 
+\mathbf{Y}(\mathbf{\{b\}}) & = & 1, & 
+\mathbf{Y}(\mathbf{\{c\}}) & = & -1 & 
+\end{array}
+\end{equation*}
+
+
+\begin{equation*}
+\begin{array}{lclll}
+\mathds{P}(\mathbf{Y} = 0) = \dfrac{1}{2}, & & \mathds{P}(\mathbf{Y} = 1) = \dfrac{1}{4}, & & \mathds{P}(\mathbf{Y} = -1) =\dfrac{1}{4}.
+\end{array}
+\end{equation*}
+
+assim a distribuição de probabilidade de $\mathbf{Y}$ é:
+
+\begin{table}[H]
+\caption{Distribuição de probabilidade de $\mathbf{Y}$}\label{inference}
+\centering
+\begin{tabular}{lrrr}
+\hline
+$\mathbf{Y}$ & -1 & 0 & 1   \\
+\hline
+$\mathds{P}(\mathbf{Y} = k)$ & $\frac{1}{4}$ & $\frac{1}{2}$ & $\frac{1}{4}$ \\
+
+\hline
+\end{tabular}
+\end{table}
+
+2. Calcular $\mathds{E}[\mathbf{X}\mathbf{Y}]$. $\mathbf{X}$ e $\mathbf{Y}$ são independentes?
+
+\noindent
+\textit{Solução:} \\
+
+Como,
+\begin{equation*}
+\begin{array}{lclllll}
+\mathds{E}(\mathbf{X}) & = & -1 \cdot \mathds{P}(\mathbf{X} = -1) + 1 \cdot \mathds{P}(\mathbf{X} = 1)\\ 
+& = & -1 \cdot \dfrac{1}{2} + 1 \cdot \dfrac{1}{2} \; = \; 0\\
+
+\mathds{E}(\mathbf{Y}) & = & -1 \cdot \mathds{P}(\mathbf{Y} = -1) + 0 \cdot \mathds{P}(\mathbf{Y} = 0) + 1 \cdot \mathds{P}(\mathbf{Y} = 1)\\ 
+& = & -1 \cdot \dfrac{1}{4} + 0 \cdot \dfrac{1}{2} + 1 \cdot \dfrac{1}{4} \; = \; 0\\
+
+\end{array}
+\end{equation*}
+
+Logo, $\mathbf{X}$ e $\mathbf{Y}$ são independentes, dado que a probabilidade de um evento em $\mathbf{X}$ ocorrer não depende de nenhum evento ocorrer em logo, $\mathbf{X}$ e $\mathbf{Y}$ são independentes, dado que a probabilidade de um evento em $\mathbf{Y}$.
+
+Portanto, pela propriedade da esperança,
+
+\begin{equation*}
+\begin{array}{lclllll}
+\mathds{E}(\mathbf{XY}) & = & \mathds{E}(\mathbf{X})\cdot\mathds{E}(\mathbf{Y}) \; = \; 0 \\ 
+\end{array}
+\end{equation*}
+
+\section*{Questão 3}
+
+Sejam $\mathbf{X}$ e $\mathbf{Y}$ variáveis aleatórias independentes com função densidade de probabilidade uniforme no intervalo $[0,a]$. Definimos $\mathbf{Z} = \mathbf{X} + \mathbf{Y}$
+
+1. Fazer um desenho da função de distribuição de $\mathbf{Z}$, para $a>0$.
+
+\noindent
+\textit{Solução:} \\
+
+2. Calcular a função densidade de $\mathbf{Z}$, para $a>0$.
+
+\noindent
+\textit{Solução:} \\
+\begin{equation*}
+\begin{array}{lclll}
+f_{x}(x) & = & \dfrac{1}{a} = f_{y}(y); \; a>0 \\
+
+f_{z}(z) & = & \displaystyle\int_{\mathbf{X}} f_{x}(x) \cdot f_{y}(z-x)dx  \\[25pt]
+\end{array}
+\end{equation*}
+
+Logo, 
+
+\hspace{1cm} se $0<z<a$
+
+\begin{equation*}
+\begin{array}{lclll}
+f_{z}(z) & = & \left.\displaystyle\int_{0}^{z} \dfrac{1}{a} \cdot \dfrac{1}{a} dx = \dfrac{1}{a^2}\cdot x \right\vert_{0}^{z} & = & z \cdot \dfrac{1}{a^2} \cdot \mathds{1}_{(0,a)}(z) \\[25pt]
+\end{array}
+\end{equation*}
+
+\hspace{1cm} se $a<z<2a$
+
+\begin{equation*}
+\begin{array}{lcllllll}
+f_{z}(z) & = & \left.\displaystyle\int_{z-a}^{a} \dfrac{1}{a} \cdot \dfrac{1}{a} dx = \dfrac{1}{a^2}\cdot x \right\vert_{z-a}^{a} & = & (a - z + a) \cdot \dfrac{1}{a^2} & = & (2a - z) \cdot \dfrac{1}{a^2} \cdot \mathds{1}_{(a,2a)}(z) \\[25pt]
+\end{array}
+\end{equation*}
+
+\section*{Questão 4}
+
+Seja o vetor $(\mathbf{X},\mathbf{Y})$ aleatório com função densidade conjunta densidade conjunta dada por 
+
+\begin{equation*}
+\begin{array}{lcllllll}
+f_{\mathbf{X}\mathbf{Y}}(x,y) & = & \left\{
+    \begin{array}{rccc}
+         2 e^{-x-y} & \mbox{se} & 0<x<y<\infty\\
+         0 & \mbox{se} & \mbox{caso contrário}.
+    \end{array}
+\right. \\
+\end{array}
+\end{equation*}
+
+1. Calcular $\mathds{E}[\mathbf{X}]$ e $\mathds{E}[\mathbf{Y}]$.
+
+\noindent
+\textit{Solução:} \\
+\begin{equation*}
+\begin{array}{lccllll}
+f_{x}(x) & = & \displaystyle\int_{x}^{\infty} 2 e^{-x-y} dy & = & 2e^{-x} \displaystyle\int_{x}^{\infty}e^{-y}dy\\ 
+& = & \left. 2e^{-x}\left( - e^{-y}\right\vert_{x}^{\infty}\right) & = & 2e^{-x}e^{-x} & = & 2e^{-2x}\mathds{1}_{(0,\infty)}(x) \\[25pt]
+
+f_{y}(y) & = & \displaystyle\int_{0}^{y} 2 e^{-x-y} dx & = & 2e^{-y} \displaystyle\int_{0}^{y}e^{-x}dx\\ 
+& = & \left. 2e^{-y}\left( - e^{-x}\right\vert_{0}^{y}\right) & = & 2e^{-y}(-e^{-y}+1) & = & 2e^{-y}(1-e^{-y})\mathds{1}_{(0,\infty)}(y) \\
+\end{array}
+\end{equation*}
+
+Assim,
+
+\begin{equation*}
+\begin{array}{lclllll}
+\mathds{E}(\mathbf{X}) & = & \displaystyle\int_{0}^{\infty} x \cdot 2 e^{-2x} dx \; = \; 2\displaystyle\int_{0}^{\infty} x e^{-2x} dx\\ 
+& = & \left. 2\left[ x \cdot -\dfrac{1}{2}e^{-2x} \right\vert_{0}^{\infty} - \displaystyle\int_{0}^{\infty}-\dfrac{1}{2}e^{-2x}dx \right] \; = \;
+\\
+& = & 2\left[ \dfrac{1}{2} \displaystyle\int_{0}^{\infty}e^{-2x}dx \right] \; = \; \left.\left(-\dfrac{1}{2}e^{-2x} \right\vert_{0}^{\infty}\right) \; = \; -\dfrac{1}{2}\cdot (-1) \; = \; \dfrac{1}{2} \\[25pt]
+
+\mathds{E}(\mathbf{Y}) & = & \displaystyle\int_{0}^{\infty} y \cdot 2 e^{-2y}(1-e^{-2y}) dy \; = \; 2\displaystyle\int_{0}^{\infty} \left(y e^{-2y} - y e^{-2y}\right) dy\\ 
+
+& = & 2\left.\left\{\left[ \left( y e^{-y} \right\vert_{0}^{\infty}\right) - \displaystyle\int_{0}^{\infty}- e^{-2y}dy \right] - \left.\left[\left( y \cdot -\dfrac{1}{2}e^{-2y} \right\vert_{0}^{\infty}\right) - \displaystyle\int_{0}^{\infty} -\dfrac{1}{2}e^{-2y}dy \right]\right\} \\
+
+& = & 2\left[ \displaystyle\int_{0}^{\infty} e^{-y}dy - \left( \dfrac{1}{2} \displaystyle\int_{0}^{\infty}- e^{-2y}dy\right) \right] \\
+
+& = & 2\left[ \left( \left. -e^{-y} \right\vert_{0}^{\infty}\right) -  \dfrac{1}{2} \cdot\left( -\dfrac{1}{2} \left. -e^{-2y} \right\vert_{0}^{\infty}\right) \right] \\
+
+& = & 2\left[ 1 -  \left( \dfrac{1}{2} \cdot\dfrac{1}{2} \right) \right] \; = \; 2\left(1 - \dfrac{1}{4} \right) \; = \; 2\left( \dfrac{3}{4} \right)\; = \; \dfrac{3}{2} \\
+
+\end{array}
+\end{equation*}
+
+2. Calcular a esperança condicional de $\mathds{E}[\mathbf{Y}\vert\mathbf{X}]$.
+
+\noindent
+\textit{Solução:} \\
+\begin{equation*}
+\begin{array}{lclllll}
+\mathds{E}[\mathbf{Y}\vert\mathbf{X}] & = & \displaystyle\int y \cdot f_{\mathbf{Y}|\mathbf{X}}(y|x) dy \\[25pt] 
+
+f_{\mathbf{Y}|\mathbf{X}}(y|x) & = & \dfrac{2e^{-x-y}}{2e^{-2x}} \; = \; e^{-x-y+2x} \; = \; e^{x-y}, && \mbox{logo},\\[25pt] 
+
+\end{array}
+\end{equation*}
+
+\begin{equation*}
+\begin{array}{rclllll}
+\mathds{E}[\mathbf{Y}\vert\mathbf{X}=x] & = & \displaystyle\int_{x}^{\infty} y \cdot e^{x-y}dy = e^{x}\cdot\displaystyle\int_{x}^{\infty}y\cdot e^{-y}dy \\
+
+& = & e^{x}\left[ y \cdot  \left. -e^{-y} \right\vert_{x}^{\infty} - \displaystyle\int_{x}^{\infty} - e^{-y}dy\right] \\
+
+& = & e^{x}\left[ x \cdot e^{-x} + \displaystyle\int_{x}^{\infty} e^{-y}dy\right] \; = \; e^{x}\left[ x \cdot e^{-x} + \left.\left(   -e^{-y}\right\vert_{x}^{\infty}\right)\right]\\
+
+& = & e^{x}\left[ x \cdot e^{-x} + e^{-x}\right] \; = \; x+1\\[25pt] 
+
+\mathds{E}[\mathbf{Y}\vert\mathbf{X}] & = & \mathbf{X} + 1 \\
+
+\end{array}
+\end{equation*}
+
+\end{document}
